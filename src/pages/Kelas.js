@@ -25,18 +25,36 @@ import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
-//
-import USERLIST from '../_mocks_/user';
 
 // ----------------------------------------------------------------------
 
+const CLASSLIST = [
+  {
+    id: 1,
+    name: 'Money Relationship',
+    type: 'Umum',
+    category: 'Pengembangan Diri',
+    level: 'Tingkat Dasar',
+    method: 'Self Pached Learning'
+  },
+  {
+    id: 2,
+    name: 'Belajar Linkedin',
+    type: 'Umum',
+    category: 'Pengembangan Diri',
+    level: 'Tingkat Dasar',
+    method: 'Self Pached Learning'
+  }
+];
+
 const TABLE_HEAD = [
+  { id: 'id', label: 'No', alignRight: false },
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' }
+  { id: 'type', label: 'Tipe', alignRight: false },
+  { id: 'category', label: 'Kategori', alignRight: false },
+  { id: 'level', label: 'Tingkat', alignRight: false },
+  { id: 'method', label: 'Metode', alignRight: false },
+  { id: '', label: 'Opsi', alignRight: false }
 ];
 
 // ----------------------------------------------------------------------
@@ -84,15 +102,6 @@ export default function Kelas() {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
-
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -111,6 +120,15 @@ export default function Kelas() {
     setSelected(newSelected);
   };
 
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = CLASSLIST.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -124,27 +142,19 @@ export default function Kelas() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - CLASSLIST.length) : 0;
 
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredClasses = applySortFilter(CLASSLIST, getComparator(order, orderBy), filterName);
 
-  const isUserNotFound = filteredUsers.length === 0;
+  const isClassNotFound = filteredClasses.length === 0;
 
   return (
-    <Page title="User | Minimal-UI">
+    <Page title="Kelas">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            User
+            Kelas
           </Typography>
-          <Button
-            variant="contained"
-            component={RouterLink}
-            to="#"
-            startIcon={<Iconify icon="eva:plus-fill" />}
-          >
-            New User
-          </Button>
         </Stack>
 
         <Card>
@@ -161,16 +171,16 @@ export default function Kelas() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
+                  rowCount={CLASSLIST.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers
+                  {filteredClasses
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => {
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                      const { id, name, type, category, level, method } = row;
                       const isItemSelected = selected.indexOf(name) !== -1;
 
                       return (
@@ -188,25 +198,18 @@ export default function Kelas() {
                               onChange={(event) => handleClick(event, name)}
                             />
                           </TableCell>
-                          <TableCell component="th" scope="row" padding="none">
+                          <TableCell align="left">{id}</TableCell>
+                          <TableCell component="th" scope="row">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
                           </TableCell>
-                          <TableCell align="left">{company}</TableCell>
-                          <TableCell align="left">{role}</TableCell>
-                          <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
-                          <TableCell align="left">
-                            <Label
-                              variant="ghost"
-                              color={(status === 'banned' && 'error') || 'success'}
-                            >
-                              {sentenceCase(status)}
-                            </Label>
-                          </TableCell>
+                          <TableCell align="left">{type}</TableCell>
+                          <TableCell align="left">{category}</TableCell>
+                          <TableCell align="left">{level}</TableCell>
+                          <TableCell align="left">{method}</TableCell>
 
                           <TableCell align="right">
                             <UserMoreMenu />
@@ -220,7 +223,7 @@ export default function Kelas() {
                     </TableRow>
                   )}
                 </TableBody>
-                {isUserNotFound && (
+                {isClassNotFound && (
                   <TableBody>
                     <TableRow>
                       <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
@@ -236,7 +239,7 @@ export default function Kelas() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={USERLIST.length}
+            count={1}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
