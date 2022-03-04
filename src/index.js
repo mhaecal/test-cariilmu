@@ -6,11 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 
 //
+import axios from 'axios';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
 // ----------------------------------------------------------------------
+
+axios.defaults.baseURL = 'https://api.cariilmu.co.id/api/v1';
 
 ReactDOM.render(
   <HelmetProvider>

@@ -1,6 +1,6 @@
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import {
@@ -25,27 +25,28 @@ import Scrollbar from '../components/Scrollbar';
 import Iconify from '../components/Iconify';
 import SearchNotFound from '../components/SearchNotFound';
 import { UserListHead, UserListToolbar, UserMoreMenu } from '../sections/@dashboard/user';
+import { ClassService } from '../services/ClassService';
 
 // ----------------------------------------------------------------------
 
-const CLASSLIST = [
-  {
-    id: 1,
-    name: 'Money Relationship',
-    type: 'Umum',
-    category: 'Pengembangan Diri',
-    level: 'Tingkat Dasar',
-    method: 'Self Pached Learning'
-  },
-  {
-    id: 2,
-    name: 'Belajar Linkedin',
-    type: 'Umum',
-    category: 'Pengembangan Diri',
-    level: 'Tingkat Dasar',
-    method: 'Self Pached Learning'
-  }
-];
+// const courseList = [
+//   {
+//     id: 1,
+//     name: 'Money Relationship',
+//     type: 'Umum',
+//     category: 'Pengembangan Diri',
+//     level: 'Tingkat Dasar',
+//     method: 'Self Pached Learning'
+//   },
+//   {
+//     id: 2,
+//     name: 'Belajar Linkedin',
+//     type: 'Umum',
+//     category: 'Pengembangan Diri',
+//     level: 'Tingkat Dasar',
+//     method: 'Self Pached Learning'
+//   }
+// ];
 
 const TABLE_HEAD = [
   { id: 'id', label: 'No', alignRight: false },
@@ -89,12 +90,30 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function Kelas() {
+  const [courseList, setCourseList] = useState([]);
+
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [selected, setSelected] = useState([]);
   const [orderBy, setOrderBy] = useState('name');
   const [filterName, setFilterName] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  useEffect(async () => {
+    const data = [];
+    const courses = await ClassService.getAll();
+    courses.data.records.forEach((course) => {
+      data.push({
+        id: course.id,
+        name: course.name,
+        type: course.course_type.name,
+        category: course.course_category.name,
+        level: course.course_level.name,
+        method: course.course_teach_method.name
+      });
+    });
+    setCourseList((courseList) => [...courseList, ...data]);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -122,7 +141,7 @@ export default function Kelas() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = CLASSLIST.map((n) => n.name);
+      const newSelecteds = courseList.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -142,9 +161,9 @@ export default function Kelas() {
     setFilterName(event.target.value);
   };
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - CLASSLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - courseList.length) : 0;
 
-  const filteredClasses = applySortFilter(CLASSLIST, getComparator(order, orderBy), filterName);
+  const filteredClasses = applySortFilter(courseList, getComparator(order, orderBy), filterName);
 
   const isClassNotFound = filteredClasses.length === 0;
 
@@ -171,7 +190,7 @@ export default function Kelas() {
                   order={order}
                   orderBy={orderBy}
                   headLabel={TABLE_HEAD}
-                  rowCount={CLASSLIST.length}
+                  rowCount={courseList.length}
                   numSelected={selected.length}
                   onRequestSort={handleRequestSort}
                   onSelectAllClick={handleSelectAllClick}
