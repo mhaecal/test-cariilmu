@@ -9,6 +9,11 @@ const sidebarConfig = [
   {
     title: 'kelas',
     path: '/dashboard/kelas',
+    icon: getIcon('eva:book-open-fill')
+  },
+  {
+    title: 'instruktur',
+    path: '/dashboard/instruktur',
     icon: getIcon('eva:people-fill')
   },
   {

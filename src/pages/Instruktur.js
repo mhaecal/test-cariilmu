@@ -10,7 +10,7 @@ import GridjsLanguage from '../utils/GridjsLanguage';
 
 // ----------------------------------------------------------------------
 
-export default function Kelas() {
+export default function Instruktur() {
   const navigate = useNavigate();
   const courseTable = useRef(null);
 
@@ -80,7 +80,7 @@ export default function Kelas() {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
           <Typography variant="h4" gutterBottom>
-            Kelas
+            Instruktur
           </Typography>
         </Stack>
 

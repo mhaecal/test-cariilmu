@@ -78,7 +78,7 @@ export default function AccountPopover() {
             Muhaecal Dwi Khatami
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            muhaecal@gmail.com
           </Typography>
         </Box>
 

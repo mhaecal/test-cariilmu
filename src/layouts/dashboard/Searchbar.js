@@ -58,7 +58,7 @@ export default function Searchbar() {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder="Search…"
+              placeholder="Cari..."
               startAdornment={
                 <InputAdornment position="start">
                   <Iconify
@@ -70,7 +70,7 @@ export default function Searchbar() {
               sx={{ mr: 1, fontWeight: 'fontWeightBold' }}
             />
             <Button variant="contained" onClick={handleClose}>
-              Search
+              Cari
             </Button>
           </SearchbarStyle>
         </Slide>

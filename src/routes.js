@@ -6,6 +6,8 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Kelas from './pages/Kelas';
+import KelasDetail from './pages/KelasDetail';
+import Instruktur from './pages/Instruktur';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -15,7 +17,11 @@ export default function Router() {
     {
       path: '/dashboard',
       element: <DashboardLayout />,
-      children: [{ path: 'kelas', element: <Kelas /> }]
+      children: [
+        { path: 'kelas', element: <Kelas /> },
+        { path: 'kelas/:id', element: <KelasDetail /> },
+        { path: 'instruktur', element: <Instruktur /> }
+      ]
     },
     {
       path: '/',
