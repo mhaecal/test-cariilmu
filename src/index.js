@@ -4,10 +4,12 @@ import 'simplebar/src/simplebar.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
 
 //
 import axios from 'axios';
 import App from './App';
+import { store } from './app/store';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 
@@ -16,11 +18,13 @@ import reportWebVitals from './reportWebVitals';
 axios.defaults.baseURL = 'https://api.cariilmu.co.id/api/v1';
 
 ReactDOM.render(
-  <HelmetProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </HelmetProvider>,
+  <Provider store={store}>
+    <HelmetProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </HelmetProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
