@@ -1,33 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Container,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-  Typography
-} from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { Avatar, Box, Container, LinearProgress, TextField, Typography } from '@mui/material';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import InstructorService from '../services/InstructorService';
 //
 import Page from '../components/Page';
-import BaseSelect from '../components/BaseSelect';
-import BaseChipSelect from '../components/BaseChipSelect';
 
 export default function InstrukturDetail() {
   const params = useParams();
-  const navigate = useNavigate();
   const [instructor, setInstructor] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -38,7 +19,7 @@ export default function InstrukturDetail() {
         setInstructor(res.data);
         setLoading(false);
       } catch {
-        navigate('404');
+        window.location.href = '/404';
       }
     };
     fecthData();
@@ -72,7 +53,7 @@ export default function InstrukturDetail() {
               Media Sosial
             </Typography>
             {instructor.social_media.map((value) => (
-              <Box mb={3}>
+              <Box mb={3} key={value.id}>
                 <TextField label={value.type} value={value.url} variant="outlined" fullWidth />
               </Box>
             ))}

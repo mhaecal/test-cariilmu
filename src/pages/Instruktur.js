@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Box, Button, Container, Stack, TableCell, Typography } from '@mui/material';
+import { Avatar, Box, Container, Stack, Typography } from '@mui/material';
 import { Grid } from 'gridjs';
 import { _ } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';

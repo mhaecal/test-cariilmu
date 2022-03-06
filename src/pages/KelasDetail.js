@@ -1,21 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Chip,
-  Container,
-  FormControl,
-  Grid,
-  Input,
-  InputLabel,
-  LinearProgress,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  TextField,
-  Typography
-} from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { Box, Button, Container, Grid, LinearProgress, TextField, Typography } from '@mui/material';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import CourseService from '../services/CourseService';
@@ -26,7 +11,6 @@ import BaseChipSelect from '../components/BaseChipSelect';
 
 export default function KelasDetail() {
   const params = useParams();
-  const navigate = useNavigate();
   const [courseDetail, setCourseDetail] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -37,7 +21,7 @@ export default function KelasDetail() {
         setCourseDetail(res.data);
         setLoading(false);
       } catch {
-        navigate('404');
+        window.location.href = '/404';
       }
     };
     fecthData();
