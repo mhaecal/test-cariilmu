@@ -5,6 +5,7 @@ import { Grid } from 'gridjs';
 import { _ } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';
 import Page from '../components/Page';
+import BaseOptionMenu from '../components/BaseOptionMenu';
 import { UserMoreMenu } from '../sections/@dashboard/user';
 import GridjsLanguage from '../utils/GridjsLanguage';
 
@@ -53,6 +54,11 @@ export default function Kelas() {
       {
         data: (row) => row.course_teach_method.name,
         name: 'Metode'
+      },
+      {
+        id: 'option',
+        name: '',
+        formatter: () => _(<BaseOptionMenu />)
       }
     ],
     search: true,

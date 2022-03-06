@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Container, Stack, TableCell, Typography } from '@mui/material';
+import { Avatar, Box, Button, Container, Stack, TableCell, Typography } from '@mui/material';
 import { Grid } from 'gridjs';
 import { _ } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';
 import Page from '../components/Page';
+import BaseOptionMenu from '../components/BaseOptionMenu';
 import { UserMoreMenu } from '../sections/@dashboard/user';
 import GridjsLanguage from '../utils/GridjsLanguage';
 
@@ -15,7 +16,7 @@ export default function Instruktur() {
   const courseTable = useRef(null);
 
   function goToDetail(id) {
-    navigate(`/dashboard/kelas/${id}`);
+    navigate(`/dashboard/instruktur/${id}`);
   }
 
   const grid = new Grid({
@@ -25,34 +26,33 @@ export default function Instruktur() {
         hidden: true
       },
       {
+        name: 'avatar',
+        hidden: true
+      },
+      {
         id: 'name',
         name: 'Nama',
         formatter: (cell, row) =>
           _(
-            <Typography
-              sx={{ cursor: 'pointer' }}
-              variant="subtitle1"
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
               onClick={() => goToDetail(row.cells[0].data)}
             >
-              {cell}
-            </Typography>
+              <Avatar alt={cell} src={row.cells[1].data} sx={{ mr: '15px' }} />
+              <Typography sx={{ cursor: 'pointer' }} variant="subtitle1">
+                {cell}
+              </Typography>
+            </Box>
           )
       },
       {
-        data: (row) => row.course_type.name,
-        name: 'Tipe'
+        id: 'total_courses',
+        name: 'Total Kursus'
       },
       {
-        data: (row) => row.course_category.name,
-        name: 'Kategori'
-      },
-      {
-        data: (row) => row.course_level.name,
-        name: 'Tingkat'
-      },
-      {
-        data: (row) => row.course_teach_method.name,
-        name: 'Metode'
+        id: 'option',
+        name: '',
+        formatter: () => _(<BaseOptionMenu />)
       }
     ],
     search: true,
@@ -64,7 +64,7 @@ export default function Instruktur() {
       }
     },
     server: {
-      url: 'https://api.cariilmu.co.id/api/v1/public/course',
+      url: 'https://api.cariilmu.co.id/api/v1/public/instructor',
       then: (data) => data.data.records,
       total: (data) => data.data.total_records
     },
@@ -76,7 +76,7 @@ export default function Instruktur() {
   });
 
   return (
-    <Page title="Kelas">
+    <Page title="Instruktur">
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
           <Typography variant="h4" gutterBottom>

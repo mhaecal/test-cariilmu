@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Kelas from './pages/Kelas';
 import KelasDetail from './pages/KelasDetail';
 import Instruktur from './pages/Instruktur';
+import InstrukturDetail from './pages/InstrukturDetail';
 import NotFound from './pages/Page404';
 
 // ----------------------------------------------------------------------
@@ -20,7 +21,8 @@ export default function Router() {
       children: [
         { path: 'kelas', element: <Kelas /> },
         { path: 'kelas/:id', element: <KelasDetail /> },
-        { path: 'instruktur', element: <Instruktur /> }
+        { path: 'instruktur', element: <Instruktur /> },
+        { path: 'instruktur/:id', element: <InstrukturDetail /> }
       ]
     },
     {
