@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -27,14 +27,19 @@ import BaseChipSelect from '../components/BaseChipSelect';
 
 export default function InstrukturDetail() {
   const params = useParams();
+  const navigate = useNavigate();
   const [instructor, setInstructor] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fecthData = async () => {
-      const res = await InstructorService.getById(params.id);
-      setInstructor(res.data);
-      setLoading(false);
+      try {
+        const res = await InstructorService.getById(params.id);
+        setInstructor(res.data);
+        setLoading(false);
+      } catch {
+        navigate('404');
+      }
     };
     fecthData();
   }, [params.id]);

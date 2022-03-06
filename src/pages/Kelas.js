@@ -6,7 +6,6 @@ import { _ } from 'gridjs-react';
 import 'gridjs/dist/theme/mermaid.css';
 import Page from '../components/Page';
 import BaseOptionMenu from '../components/BaseOptionMenu';
-import { UserMoreMenu } from '../sections/@dashboard/user';
 import GridjsLanguage from '../utils/GridjsLanguage';
 
 // ----------------------------------------------------------------------

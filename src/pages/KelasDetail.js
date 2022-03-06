@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -26,14 +26,19 @@ import BaseChipSelect from '../components/BaseChipSelect';
 
 export default function KelasDetail() {
   const params = useParams();
+  const navigate = useNavigate();
   const [courseDetail, setCourseDetail] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fecthData = async () => {
-      const res = await CourseService.getById(params.id);
-      setCourseDetail(res.data);
-      setLoading(false);
+      try {
+        const res = await CourseService.getById(params.id);
+        setCourseDetail(res.data);
+        setLoading(false);
+      } catch {
+        navigate('404');
+      }
     };
     fecthData();
   }, [params.id]);

@@ -6,8 +6,6 @@ import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '
 // components
 import Iconify from '../../components/Iconify';
 import MenuPopover from '../../components/MenuPopover';
-//
-import account from '../../_mocks_/account';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +62,7 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src="/static/mock-images/avatars/avatar_default.jpg" alt="photoURL" />
       </IconButton>
 
       <MenuPopover
